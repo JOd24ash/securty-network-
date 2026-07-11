@@ -1,6 +1,9 @@
 python-dotenv
 pandas 
 numpy
-sklearn
 matplotlib
 seaborn
+pymongo
+certifi
+
+#-e.
