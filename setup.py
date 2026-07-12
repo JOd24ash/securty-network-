@@ -20,5 +20,5 @@ setup(name="the security porject",
     author="JOD",
     author_email="tsxmiky24@gamil.com",
     packages=find_packages(),
-    install_requires=get_requirement("requirement.txt")
+    install_requires=get_requirement("requirements.txt")
     )
