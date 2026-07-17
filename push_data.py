@@ -12,7 +12,7 @@ ca=certifi.where()
 import pandas as pd
 import numpy as np
 import pymongo
-from network_Security.logging import logger
+from network_Security.log import logger
 from network_Security.exceptions import exception
 
 
