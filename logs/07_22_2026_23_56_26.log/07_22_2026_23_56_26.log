@@ -1,0 +1,10 @@
+[2026-07-22 23:56:34,207] INFO [root:56] - performed train test split on the datframe
+[2026-07-22 23:56:34,207] INFO [root:58] - exited split_data_ as train test method of dat ingestion class
+[2026-07-22 23:56:34,208] INFO [root:63] - exporting train and test file path
+[2026-07-22 23:56:34,269] INFO [root:68] - the date is exported to  train and test data
+[2026-07-22 23:56:34,274] INFO [root:18] - initiate the data validation
+[2026-07-22 23:56:34,311] INFO [root:30] - required columns: 2
+[2026-07-22 23:56:34,312] INFO [root:31] - Data frame has columns:31
+[2026-07-22 23:56:34,312] INFO [root:30] - required columns: 2
+[2026-07-22 23:56:34,315] INFO [root:31] - Data frame has columns:31
+[2026-07-22 23:56:34,450] INFO [root:20] - data Validation complted

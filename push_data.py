@@ -39,9 +39,9 @@ class network_DataExtraction():
             self.database=database
             self.collection=collection
             self.records=records
+            self.monogo_client = pymongo.MongoClient(Mongo_db_url, tlsCAFile=ca)
 
 
-            self.monogo_client=pymongo.MongoClient(Mongo_db_url)
             self.database=self.monogo_client[self.database]
             self.collection=self.database[self.collection]
             self.collection.insert_many(self.records)

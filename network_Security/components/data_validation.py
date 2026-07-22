@@ -59,6 +59,7 @@ class Data_Validation:
             dir_path=os.path.dirname(drift_report_file_path)
             os.makedirs(dir_path,exist_ok=True)
             wirte_yaml_file(file_path=drift_report_file_path,content=report)    
+            return status
         except  Exception  as e:
             raise CustomException(e,sys)
 
@@ -93,12 +94,19 @@ class Data_Validation:
                 self.data_validation_config.valid_test_file_path,index=False,header=True
             )   
 
+            data_validation_artifact = DataValdationArtifact(
+                    validation_status=status,
+                    valid_train_file_path=self.data_ingestion_artifact.trained_file_path,
+                    valid_test_file_path=self.data_ingestion_artifact.test_file_path,
+                    invalid_train_file_path=None,
+                    invalid_test_file_path=None,
+                    drift_report_file_path=self.data_validation_config.drift_report_file_path,
+                )    
+            return data_validation_artifact
 
 
-            data_validation_artifact=DataValdationArtifact(
-                validation_status=status,
-                valid_train_file_path=self.data_validation_config.trained_file_path,
-            )
+
+ 
         except  Exception as e:
             raise CustomException(e,sys)    
 
