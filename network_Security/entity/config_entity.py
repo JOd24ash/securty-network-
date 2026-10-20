@@ -2,17 +2,38 @@ from datetime import datetime
 import os
 from network_Security.constants import training_pipeline
 
-print(training_pipeline.PIPELINE_NAME)
-print(training_pipeline.ARITFACT_DIR)
-
 class TrainingPipelineConfig:
-    def __init__(self,timestamp=datetime.now()):
+    def __init__(self,timestamp=None):
+        timestamp = timestamp or datetime.now()
         timestamp=timestamp.strftime("%m_%d_%Y_%H_%M_%S")
         self.pipeline_name=training_pipeline.PIPELINE_NAME
         self.artifact_name=training_pipeline.ARITFACT_DIR
         self.artifact_dir=os.path.join(self.artifact_name,timestamp)
         self.timestamp: str=timestamp
+
+class DataTransformationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        self.data_transformation_dir = os.path.join(training_pipeline_config.artifact_dir, training_pipeline.DATA_TRANSFORMATION_DIR_NAME)
+        self.transformed_train_file_path = os.path.join(self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR, training_pipeline.TRAIN_FILE_NAME)
+        self.transformed_test_file_path = os.path.join(self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR, training_pipeline.TEST_FILE_NAME)
+        self.preprocessor_object_file_path = os.path.join(self.data_transformation_dir, training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR, "preprocessor.pkl")
+
+class ModelTrainerConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        self.model_trainer_dir = os.path.join(training_pipeline_config.artifact_dir, "model_trainer")
+        self.trained_model_file_path = os.path.join(self.model_trainer_dir, "model.pkl")
         
+
+class DataTransformationConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        root = os.path.join(training_pipeline_config.artifact_dir, training_pipeline.DATA_TRANSFORMATION_DIR_NAME)
+        self.transformed_train_file_path = os.path.join(root, "transformed", training_pipeline.TRAIN_FILE_NAME)
+        self.transformed_test_file_path = os.path.join(root, "transformed", training_pipeline.TEST_FILE_NAME)
+        self.preprocessor_object_file_path = os.path.join(root, "transformed_object", "preprocessor.pkl")
+
+class ModelTrainerConfig:
+    def __init__(self, training_pipeline_config: TrainingPipelineConfig):
+        self.trained_model_file_path = os.path.join(training_pipeline_config.artifact_dir, "model_trainer", "model.pkl")
 
 class DataIngestionConfig:
     def __init__(self,training_pipeline_config:TrainingPipelineConfig):

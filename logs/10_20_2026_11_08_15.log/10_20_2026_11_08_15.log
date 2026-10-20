@@ -1,0 +1,5 @@
+[2026-10-20 11:08:22,015] INFO [root:69] - performed train test split on the datframe
+[2026-10-20 11:08:22,015] INFO [root:71] - exited split_data_ as train test method of dat ingestion class
+[2026-10-20 11:08:22,016] INFO [root:76] - exporting train and test file path
+[2026-10-20 11:08:22,084] INFO [root:81] - the date is exported to  train and test data
+[2026-10-20 11:08:23,641] INFO [root:20] - Training pipeline completed: ModelTrainerArtifact(trained_model_file_path='Artifacts\\10_20_2026_11_08_18\\model_trainer\\model.pkl', test_accuracy=0.9719583898688376, test_f1=0.9719618597925463)

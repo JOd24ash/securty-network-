@@ -10,3 +10,4 @@ dill
 pyaml
 
 #-e.
+streamlit

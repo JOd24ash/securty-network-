@@ -30,6 +30,11 @@ class DataIngestion:
         try:
             database_name=self.data_ingestion_config.database_name
             collection_name=self.data_ingestion_config.collection_name
+            if not MONGO_DB_url:
+                local_path = os.path.join(os.getcwd(), "Network_data", "phisingData.csv")
+                if not os.path.isfile(local_path):
+                    raise ValueError("MONGO_URL is unset and local dataset was not found at " + local_path)
+                return pd.read_csv(local_path).replace({"na": np.nan})
             self.mongo_client = pymongo.MongoClient(MONGO_DB_url, tlsCAFile=ca)
             collection=self.mongo_client[database_name][collection_name]
             df=pd.DataFrame(list(collection.find()))
@@ -38,6 +43,10 @@ class DataIngestion:
             df.replace({"na":np.nan},inplace=True)    
             return df
         except Exception as e:
+            local_path = os.path.join(os.getcwd(), "Network_data", "phisingData.csv")
+            if os.path.isfile(local_path):
+                logging.warning("MongoDB ingestion failed; using bundled dataset: %s", e)
+                return pd.read_csv(local_path).replace({"na": np.nan})
             raise CustomException(e,sys)
 
     def export_data_to_feature_store(self,dataframe:pd.DataFrame):
@@ -52,6 +61,10 @@ class DataIngestion:
         
     def split_data_as_train_test(self,dataframe:pd.DataFrame):
         try:
+            if dataframe.empty:
+                raise ValueError("Cannot split an empty dataset")
+            if len(dataframe) < 2:
+                raise ValueError("At least two rows are required for train/test splitting")
             train_set,test_set=train_test_split(dataframe,test_size=self.data_ingestion_config.train_test_spilt,random_state=42)
             logging.info("performed train test split on the datframe")
 

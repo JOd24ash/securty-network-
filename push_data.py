@@ -4,8 +4,7 @@ import json
 
 from dotenv import load_dotenv
 load_dotenv()
-Mongo_db_url=os.getenv("MONGO_URI")
-print(Mongo_db_url)
+Mongo_db_url=os.getenv("MONGO_URL")
 
 import certifi
 ca=certifi.where()
@@ -39,19 +38,20 @@ class network_DataExtraction():
             self.database=database
             self.collection=collection
             self.records=records
-            self.monogo_client = pymongo.MongoClient(Mongo_db_url, tlsCAFile=ca)
-
-
-            self.database=self.monogo_client[self.database]
-            self.collection=self.database[self.collection]
-            self.collection.insert_many(self.records)
-            return(len(self.records))
+            if not Mongo_db_url:
+                raise ValueError("MONGO_URL is not set. Add your MongoDB connection string to .env")
+            self.monogo_client = pymongo.MongoClient(Mongo_db_url, tlsCAFile=ca, serverSelectionTimeoutMS=10000)
+            self.monogo_client.admin.command("ping")
+            database_handle = self.monogo_client[self.database]
+            collection_handle = database_handle[self.collection]
+            result = collection_handle.insert_many(self.records)
+            return len(result.inserted_ids)
         except Exception as e:
             raise exception(e,sys)
 
 
 if __name__=="__main__":
-    file_path="Network_data\phisingData.csv"
+    file_path=os.path.join("Network_data", "phisingData.csv")
     database="first"
     collection="NetworkData"
     networkobj=network_DataExtraction()

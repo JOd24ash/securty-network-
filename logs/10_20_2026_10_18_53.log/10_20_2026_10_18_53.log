@@ -1,0 +1,5 @@
+[2026-10-20 10:18:56,592] WARNING [root:48] - MongoDB ingestion failed; using bundled dataset: The DNS query name does not exist: _mongodb._tcp.cluster0.5gyi7pp.mongodb.net.
+[2026-10-20 10:18:56,723] INFO [root:69] - performed train test split on the datframe
+[2026-10-20 10:18:56,723] INFO [root:71] - exited split_data_ as train test method of dat ingestion class
+[2026-10-20 10:18:56,724] INFO [root:76] - exporting train and test file path
+[2026-10-20 10:18:56,788] INFO [root:81] - the date is exported to  train and test data
